@@ -1,16 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:http/http.dart' as http;
 import 'package:map_app/map_screen.dart';
-import 'dart:convert';
+
 
 import 'package:permission_handler/permission_handler.dart';
 
-void main() {
+void main() async {
+    WidgetsFlutterBinding.ensureInitialized();
+
+  // Request location permission before the app starts
+  await _requestPermissions();
   runApp(const MyApp());
 }
+Future<void> _requestPermissions() async {
+  PermissionStatus status = await Permission.location.request();
 
+  if (status.isGranted) {
+    print('Location permission granted');
+  } else if (status.isDenied) {
+    print('Location permission denied');
+    
+  } else if (status.isPermanentlyDenied) {
+    openAppSettings();
+  }
+}
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

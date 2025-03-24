@@ -5,7 +5,29 @@ import 'package:http/http.dart' as http;
 import 'package:map_app/constants.dart';
 import 'dart:convert';
 
-import 'package:permission_handler/permission_handler.dart';
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Traffic Navigator',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          elevation: 8.0,
+          highlightElevation: 12.0,
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.blue[800],
+        ),
+      ),
+      home: const MapScreen(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
 
@@ -22,36 +44,19 @@ class _MapScreenState extends State<MapScreen> {
   List<LatLng> blueRoutePoints = []; // Free route
   List<Marker> markers = [];
   
-
   @override
   void initState() {
     super.initState();
-    _requestLocationPermission;
     _initializeMap();
   }
 
 
-Future<void> _requestLocationPermission() async {
-  PermissionStatus status = await Permission.location.request();
 
-  if (status.isGranted) {
-    // Location permission granted
-    print("Location permission granted.");
-  } else if (status.isDenied) {
-    // Location permission denied
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Location permission denied. The map may not show the current location.')),
-    );
-  } else if (status.isPermanentlyDenied) {
-    // Location permission permanently denied
-    openAppSettings();  // Open app settings to allow the user to manually enable location permission
-  }
-}
 
   void _initializeMap() {
     setState(() {
       markers = [
-        _buildLocationMarker(AppConstants.currentLocation, Icons.my_location, Colors.blue),
+        _buildLocationMarker(AppConstants. currentLocation, Icons.my_location, Colors.blue),
         _buildLocationMarker(AppConstants.destination1, Icons.location_on, Colors.red),
         _buildLocationMarker(AppConstants.destination2, Icons.location_on, Colors.green),
       ];
@@ -87,7 +92,7 @@ Future<void> _requestLocationPermission() async {
     try {
       final response = await http.get(
         Uri.parse(
-          'https://api.openrouteservice.org/v2/directions/driving-car?api_key=$AppConstants.orsApiKey'
+          'https://api.openrouteservice.org/v2/directions/driving-car?api_key=${AppConstants.orsApiKey}'
           '&start=${AppConstants.currentLocation.longitude},${AppConstants.currentLocation.latitude}'
           '&end=${destination.longitude},${destination.latitude}'),
       );
