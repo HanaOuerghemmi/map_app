@@ -1,0 +1,2 @@
+/home/hana/HanaDoc/standard/map_app/android/app/.cxx/Debug/2k1w4c1h/x86/CMakeFiles/edit_cache.dir
+/home/hana/HanaDoc/standard/map_app/android/app/.cxx/Debug/2k1w4c1h/x86/CMakeFiles/rebuild_cache.dir

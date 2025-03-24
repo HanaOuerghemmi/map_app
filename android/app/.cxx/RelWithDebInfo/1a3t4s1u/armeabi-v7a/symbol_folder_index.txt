@@ -1,0 +1,1 @@
+/home/hana/HanaDoc/standard/map_app/build/app/intermediates/cxx/RelWithDebInfo/1a3t4s1u/obj/armeabi-v7a

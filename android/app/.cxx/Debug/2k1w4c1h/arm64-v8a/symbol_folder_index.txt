@@ -1,0 +1,1 @@
+/home/hana/HanaDoc/standard/map_app/build/app/intermediates/cxx/Debug/2k1w4c1h/obj/arm64-v8a
