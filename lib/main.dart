@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
           foregroundColor: Colors.blue[800],
         ),
       ),
-      home: const MapScreen(),
+      home:  MapScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
