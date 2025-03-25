@@ -7,7 +7,7 @@ Cette application permet de détecter l’emplacement actuel de l’utilisateur 
 
 ### 1. Installation de l'APK
 - Téléchargez l'APK et installez-le sur votre appareil Android en cliquant sur le lien ci-dessous :
-  [Télécharger l'APK](https://drive.google.com/file/d/1e65vRxtCaxvP3fTLUvjkbJn7kVCQ5xKR/view?usp=drive_link)
+  [Télécharger l'APK](https://drive.google.com/file/d/1AeG7epCl4wLxi1mxssLQvmcB9UpwupJP/view?usp=sharing)
 
 ### 2. Clonage du dépôt
 - Clonez le dépôt GitHub pour accéder au code source du projet :
