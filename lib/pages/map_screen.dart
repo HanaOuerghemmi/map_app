@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:map_app/pages/map_widgets.dart';
+import 'package:map_app/pages/widgets/map_widgets.dart';
 import 'package:map_app/pages/widgets/map_layers.dart';
 import 'package:map_app/pages/widgets/route_info_panel.dart';
 import 'package:map_app/utils/map_utils.dart';
