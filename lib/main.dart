@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:map_app/map_screen.dart';
+import 'package:map_app/service/provider/map_provider.dart';
+import 'package:map_app/pages/map_screen.dart';
 
+import 'package:provider/provider.dart';
 
 import 'package:permission_handler/permission_handler.dart';
 
 void main() async {
     WidgetsFlutterBinding.ensureInitialized();
 
-  // Request location permission before the app starts
   await _requestPermissions();
-  runApp(const MyApp());
+runApp(
+    ChangeNotifierProvider(
+      create: (context) => MapProvider(),
+      child: const MaterialApp(
+        home: MapScreen(),
+      ),
+    ),
+  );
 }
 Future<void> _requestPermissions() async {
   PermissionStatus status = await Permission.location.request();
@@ -29,7 +37,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Traffic Navigator',
+      title: 'Map APP',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
