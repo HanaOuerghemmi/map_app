@@ -1,7 +1,7 @@
 // map_controller.dart
 import 'package:latlong2/latlong.dart';
-import 'package:map_app/map_service.dart';
-import 'package:map_app/map_point.dart';
+import 'package:map_app/service/map_service.dart';
+import 'package:map_app/service/model/map_point.dart';
 
 class MapRouteController {
   final LatLng intermediatePoint;

@@ -1,7 +1,7 @@
 // map_widgets.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:map_app/map_point.dart';
+import 'package:map_app/service/model/map_point.dart';
 
 class MapInfoBox extends StatelessWidget {
   final List<MapPoint> destinations;

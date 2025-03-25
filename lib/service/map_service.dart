@@ -4,8 +4,8 @@ import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:map_app/constants.dart';
-import 'package:map_app/map_point.dart';
+import 'package:map_app/utils/constants.dart';
+import 'package:map_app/service/model/map_point.dart';
 
 class MapService {
   static Future<Position?> getUserLocation() async {
