@@ -5,28 +5,6 @@ import 'package:http/http.dart' as http;
 import 'package:map_app/constants.dart';
 import 'dart:convert';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Traffic Navigator',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        floatingActionButtonTheme: FloatingActionButtonThemeData(
-          elevation: 8.0,
-          highlightElevation: 12.0,
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.blue[800],
-        ),
-      ),
-      home: const MapScreen(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -38,27 +16,24 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   final MapController mapController = MapController();
   final double _zoomIncrement = 0.5;
-  
-
   List<LatLng> redRoutePoints = []; // Route with traffic
   List<LatLng> blueRoutePoints = []; // Free route
   List<Marker> markers = [];
-  
+  String? markerInfoName;
+  String? markerInfoDescription;
+
   @override
   void initState() {
     super.initState();
     _initializeMap();
   }
 
-
-
-
   void _initializeMap() {
     setState(() {
       markers = [
-        _buildLocationMarker(AppConstants. currentLocation, Icons.my_location, Colors.blue),
-        _buildLocationMarker(AppConstants.destination1, Icons.location_on, Colors.red),
-        _buildLocationMarker(AppConstants.destination2, Icons.location_on, Colors.green),
+        _buildLocationMarker(AppConstants.currentLocation, Icons.my_location, Colors.blue, 'Current Location', 'This is your current location.'),
+        _buildLocationMarker(AppConstants.destination1, Icons.location_on, Colors.red, 'Destination 1', 'This is Lycée les Pères Blancs.'),
+        _buildLocationMarker(AppConstants.destination2, Icons.location_on, Colors.green, 'Destination 2', 'This is Lycée Francais Pierre Mendès France.'),
       ];
     });
 
@@ -66,26 +41,39 @@ class _MapScreenState extends State<MapScreen> {
     _getRoute(AppConstants.destination2, isTraffic: false); // Blue route (Free)
   }
 
-  Marker _buildLocationMarker(LatLng point, IconData icon, Color color) {
+  // Modified Marker builder to include name and description
+  Marker _buildLocationMarker(LatLng point, IconData icon, Color color, String name, String description) {
     return Marker(
       width: 50.0,
       height: 50.0,
       point: point,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              blurRadius: 6,
-              spreadRadius: 2,
-            )
-          ],
+      child: GestureDetector(
+        onTap: () {
+          _updateMarkerInfo(name, description);
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                blurRadius: 6,
+                spreadRadius: 2,
+              )
+            ],
+          ),
+          child: Icon(icon, color: color, size: 30.0),
         ),
-        child: Icon(icon, color: color, size: 30.0),
       ),
     );
+  }
+
+  void _updateMarkerInfo(String name, String description) {
+    setState(() {
+      markerInfoName = name;
+      markerInfoDescription = description;
+    });
   }
 
   Future<void> _getRoute(LatLng destination, {required bool isTraffic}) async {
@@ -169,33 +157,92 @@ class _MapScreenState extends State<MapScreen> {
               ),
             ],
           ),
+          _buildMarkerInfo(),
           _buildMapControls(),
         ],
       ),
     );
   }
+Widget _buildMarkerInfo() {
+  if (markerInfoName != null && markerInfoDescription != null) {
+    return Positioned(
+      left: 16.0,
+      bottom: 16.0,
+      child: Container(
+        padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 6,
+              spreadRadius: 2,
+            ),
+          ],
+        ),
+        child: Column(
+          spacing: 8,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () {
+                  setState(() {
+                    markerInfoName = null;  // Hide info
+                    markerInfoDescription = null; // Hide info
+                  });
+                },
+              ),
+            ),
+            
+            Text(
+              markerInfoName!,
+              style: const TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            
+            Text(
+              markerInfoDescription!,
+              style: const TextStyle(fontSize: 14.0),
+              overflow: TextOverflow.ellipsis, 
+              maxLines: 4,  
+            ),
+          ],
+        ),
+      ),
+    );
+  } else {
+    return const SizedBox.shrink();
+  }
+}
+
+
 
   Widget _buildMapControls() {
     return Positioned(
       right: 16.0,
       bottom: 16.0,
       child: Column(
+        spacing: 16,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          // Location button
+          // Current Location button
           _buildControlButton(
             icon: Icons.my_location,
             onPressed: () => _moveToLocation(),
             tooltip: 'Current Location',
           ),
-          const SizedBox(height: 12),
           // Zoom in button
           _buildControlButton(
             icon: Icons.add,
             onPressed: () => _zoomIn(),
             tooltip: 'Zoom In',
           ),
-          const SizedBox(height: 12),
           // Zoom out button
           _buildControlButton(
             icon: Icons.remove,
