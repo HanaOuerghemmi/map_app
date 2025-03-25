@@ -5,15 +5,41 @@ Cette application permet de détecter l’emplacement actuel de l’utilisateur 
 
 ## Instructions pour exécuter l'application
 
-### Installation
+### 1. Installation de l'APK
+- Téléchargez l'APK et installez-le sur votre appareil Android en cliquant sur le lien ci-dessous :
+  [Télécharger l'APK](https://drive.google.com/file/d/1e65vRxtCaxvP3fTLUvjkbJn7kVCQ5xKR/view?usp=drive_link)
 
-0. Installer l'APK sur votre appareil.
+### 2. Clonage du dépôt
+- Clonez le dépôt GitHub pour accéder au code source du projet :
+  ```bash
+  git clone https://github.com/HanaOuerghemmi/map_app
 
-[Télécharger l'APK](https://drive.google.com/file/d/1e65vRxtCaxvP3fTLUvjkbJn7kVCQ5xKR/view?usp=drive_link) 
 
-1. Cloner le dépôt:
-   ```bash
-   git clone [URL_DU_DEPOT]
+### 3.  Accédez au répertoire du projet
+- Changez de répertoire vers le dossier du projet cloné  :
+  ```bash
+  cd map_app
+
+### 4.  Installez les dépendances du projet
+- Installez les dépendances nécessaires avec Flutter :
+
+  ```bash
+  flutter pub get
+
+### 4.  Installez les dépendances du projet
+- Installez les dépendances nécessaires avec Flutter :
+
+  ```bash
+  flutter pub get
+
+### 5.  Lancez l'application
+- Lancez l'application sur un émulateur ou un appareil physique :
+
+  ```bash
+  flutter run
+
+
+
 
 ### Choix techniques
 
